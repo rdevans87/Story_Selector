@@ -1,13 +1,9 @@
 * {
   box-sizing: border-box;
   margin-top: 0px;
-  padding:10px;
+  padding: 10px;
 }
 
-
-.logline {
-  margin-top: 1rem;
-}
 
 .topnav {
   background-color: #333;
