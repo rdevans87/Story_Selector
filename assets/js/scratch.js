@@ -265,3 +265,37 @@ function getDialogueTemplate() {
     document.getElementById('selectedStory').appendChild(newCharacterInput);
     document.getElementById('selectedStory').appendChild(newDialogueInput);}}
   
+
+    function displayCharacterTemplate() {
+      // Get the title and story genre entered by the user
+      const title = document.getElementById('title').value;
+      const storyGenre = document.getElementById('storyGenre').value;
+    
+      // Check if title and story genre inputs are not empty
+      if (!title || !storyGenre) {
+        alert('Please enter both title and story genre');
+        return;
+      }
+    
+      // Create the character development template
+      const template = `
+        <h2>${title} (${storyGenre})</h2>
+        <h3>Character Development</h3>
+        <label for="character-name">Character Name:</label>
+        <input type="text" id="character-name" placeholder="Enter the character's name">
+        <br>
+        <label for="occupation">Occupation:</label>
+        <input type="text" id="occupation" placeholder="Enter the character's occupation">
+        <br>
+        <label for="personality">Personality Traits:</label>
+        <textarea id="personality" placeholder="Enter the character's personality traits"></textarea>
+        <br>
+        <label for="background">Background:</label>
+        <textarea id="background" placeholder="Enter the character's background"></textarea>
+        <br>
+        <button type="button" onclick="saveCharacterTemplate()">Save Template</button>
+      `;
+    
+      // Display the character development template on the page
+      document.getElementById('selectedStory').innerHTML = template;
+    }
