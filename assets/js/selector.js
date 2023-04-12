@@ -71,8 +71,8 @@ const savedStory = JSON.parse(localStorage.getItem('story'));
 
 // If saved data exists, display it on the page
 if (savedStory) {
-  const savedResultsDiv = document.getElementById('savedResults');
-  savedResultsDiv.innerHTML = `
+  const selectedStoryDiv = document.getElementById('selectedStory');
+  selectedStoryDiv.innerHTML = `
     <h2>Saved Results</h2>
     <p><strong>Title:</strong> ${savedStory.title}</p>
     <p><strong>Story Genre:</strong> ${savedStory.storyGenre}</p>
@@ -80,9 +80,6 @@ if (savedStory) {
     <p><strong>Screenplay Format:</strong> ${savedStory.screenplayFormat}</p>
   `;
 }
-
-
-
 
 function downloadResults() {
   const story = JSON.parse(localStorage.getItem('story'));
@@ -106,11 +103,30 @@ function downloadResults() {
   }, 0);
 }
 
+window.onload = function() {
+  const savedStory = JSON.parse(localStorage.getItem('story'));
+  if (savedStory) {
+    document.getElementById('title').value = savedStory.title;
+    document.getElementById('storyGenre').value = savedStory.storyGenre;
+    document.getElementById('storyType').value = savedStory.storyType;
+    document.getElementById('screenplayFormat').value = savedStory.screenplayFormat;
+    document.getElementById('savedResults').innerHTML = `
+      <h2>Saved Results:</h2>
+      <p>Title: ${savedStory.title}</p>
+      <p>Story Genre: ${savedStory.storyGenre}</p>
+      <p>Story Type: ${savedStory.storyType}</p>
+      ${savedStory.screenplayFormat ? `<p>Screenplay Format: ${savedStory.screenplayFormat}</p>` : ''}
+    `;
+  }
+};
 
-// Function to start over and clear the form and selected story
-function startOver() {
+
+// Function to reset the form and clear local storage
+function resetForm() {
   document.getElementById('add-story-form').reset();
   document.getElementById('selectedStory').innerHTML = '';
-  localStorage.removeItem('story');
-  alert('Form and selected story cleared');
+  localStorage.clear();
 }
+
+// Add event listener to the start over button
+document.getElementById('start-over-btn').addEventListener('click', resetForm);
