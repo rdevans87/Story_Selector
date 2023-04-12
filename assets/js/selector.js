@@ -1,4 +1,14 @@
 // Function to select a story and display it on the page
+// Add event listener to the form
+document.getElementById('add-story-form').addEventListener('submit', (event) => {
+  // Prevent the page from refreshing
+  event.preventDefault();
+  
+  // Call the selectStory function to display the selected story on the page
+  selectStory();
+});
+
+
 function selectStory() {
   // Get the selected story type and screenplay format (if applicable)
   const storyType = document.getElementById('storyType').value;
@@ -32,6 +42,7 @@ document.getElementById('storyType').addEventListener('change', (event) => {
   }
 });
 
+
 // Function to save the story to local storage
 function saveResults() {
   const title = document.getElementById('title').value;
@@ -49,9 +60,31 @@ function saveResults() {
   localStorage.setItem('story', JSON.stringify(story));
   alert('Story saved to local storage');
 }
+  // Display the saved story on the page
+  document.getElementById('title-display').innerHTML = title;
+  document.getElementById('storyGenre-display').innerHTML = storyGenre;
+  document.getElementById('storyType-display').innerHTML = storyType;
+  document.getElementById('screenplayFormat-display').innerHTML = screenplayFormat || '-';
 
-// Function to download the story loglines as a text file
-function downloadLoglines() {
+// Check if saved data exists in localStorage
+const savedStory = JSON.parse(localStorage.getItem('story'));
+
+// If saved data exists, display it on the page
+if (savedStory) {
+  const savedResultsDiv = document.getElementById('savedResults');
+  savedResultsDiv.innerHTML = `
+    <h2>Saved Results</h2>
+    <p><strong>Title:</strong> ${savedStory.title}</p>
+    <p><strong>Story Genre:</strong> ${savedStory.storyGenre}</p>
+    <p><strong>Story Type:</strong> ${savedStory.storyType}</p>
+    <p><strong>Screenplay Format:</strong> ${savedStory.screenplayFormat}</p>
+  `;
+}
+
+
+
+
+function downloadResults() {
   const story = JSON.parse(localStorage.getItem('story'));
 
   if (!story) {
@@ -59,15 +92,8 @@ function downloadLoglines() {
     return;
   }
 
-  let loglines = '';
-  if (story.storyType === 'Screenplay' && story.screenplayFormat) {
-    loglines = `Loglines for ${story.screenplayFormat} ${story.storyType}`;
-  } else {
-    loglines = `Loglines for ${story.storyType}`;
-  }
-
-  const filename = `loglines-${Date.now()}.txt`;
-  const file = new Blob([loglines], {type: 'text/plain'});
+  const filename = `story-${Date.now()}.txt`;
+  const file = new Blob([JSON.stringify(story)], {type: 'text/plain'});
   const a = document.createElement('a');
   const url = URL.createObjectURL(file);
   a.href = url;
@@ -79,6 +105,7 @@ function downloadLoglines() {
     window.URL.revokeObjectURL(url);
   }, 0);
 }
+
 
 // Function to start over and clear the form and selected story
 function startOver() {

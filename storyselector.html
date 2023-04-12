@@ -20,7 +20,7 @@
     <div class="topnav">
       <button type="button" id="download-btn" onclick="downloadResults()">Download Results</button>
       <button type="button" id="save-results" onclick="saveResults()">Save Results</button>
-      <button type="button" id="start-over-button" onclick="startOver()">Start Over</button>
+      <button type="button" id="start-over-btn" onclick="resetForm()">Start Over</button>
     </div>
     
     <div class="container">
@@ -45,14 +45,14 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="storyType">Select a Story Template:</label>
+          <label for="storyType">Select a Story Type:</label>
           <select id="storyType" name="storyType" required>
             <option value="">-- Please select a story type --</option>
-            <option value="Character Development">Character Development</option>
+            <option value="Character Development">Characters</option>
             <option value="Dialogue">Dialogue</option>
-            <option value="Manuscript">Manuscript</option>
             <option value="Novel">Novel</option>
             <option value="One-Pager">One-Pager</option>
+            <option value="Podcast">Podcast</option>
             <option value="Query Letter">Query Letter</option>
             <option value="Screenplay">Screenplay</option>
             <option value="Script Notes">Script Notes</option>
@@ -73,7 +73,17 @@
         </div>
         <button type="submit">Select Story</button>
       </form>
-  
+      
+      <div id="selectedStory">
+        
+      </div> 
+      <div id="savedResults">
+        <!-- Display saved results here -->
+      </div>
+      
+      
+
+
   <script src="assets\js\selector.js"></script>
 
   </body>
